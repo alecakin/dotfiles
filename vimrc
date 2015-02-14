@@ -12,3 +12,4 @@ syntax on
 set encoding=utf-8
 set nocompatible
 set backspace=indent,eol,start
+set background=dark
