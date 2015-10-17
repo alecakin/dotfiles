@@ -11,6 +11,7 @@ nmap <silent> <leader>sv :so $MYVIMRC<CR>
 
 filetype plugin indent on
 syntax on
+au FileType ruby set tabstop=2|set shiftwidth=2|set expandtab
 
 set backspace=indent,eol,start 
 					" allow backspacing over everything in insert mode
