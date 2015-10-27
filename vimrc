@@ -19,6 +19,7 @@ set autoindent      " always set autoindenting on
 set copyindent      " copy the prevous indenatation on autoindenting
 set tabstop=4       " four space tabs
 set shiftwidth=4    " number of spaces to use for autoidenting
+set expandtab		" tab = 4 spaces
 set shiftround      " use multiple of shiftwidth when indenting with '<' and '>'
 set showmatch       " set show matching parenthesis
 set ignorecase      " ignore case when searching
