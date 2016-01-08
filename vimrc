@@ -56,10 +56,10 @@ vnoremap . :norm. <CR>
 nmap <silent> <leader>/ :nohlsearch<CR>
 
 " get rid of the training wheels
-map <up> <nop>
-map <down> <nop>
-map <left> <nop>
-map <right> <nop>
+" map <up> <nop>
+" map <down> <nop>
+" map <left> <nop>
+" map <right> <nop>
 
 cmap fuck w !sudo tee % >/dev/null
 
