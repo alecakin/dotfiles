@@ -40,6 +40,7 @@ set noerrorbells    " don't beep
 
 set pastetoggle=<F2> " toggle paste mode on/off
 
+set colorcolumn=80 " show mark at 80 chars
 
 " make compatible across most environments
 set encoding=utf-8
