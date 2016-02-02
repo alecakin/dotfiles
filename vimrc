@@ -1,51 +1,89 @@
-set hidden " Hide extra buffers instead of closing
-set ruler
 
+filetype plugin indent on
+set nocompatible
+set modelines=0
+set background=dark " makes it easier to read
+
+syntax on
+colo slate
+au FileType ruby set tabstop=2|set shiftwidth=2|set softtabstop=2
+
+" fix tabs
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+
+" make vim behave not insanely
+set encoding=utf-8
+set scrolloff=3
+set autoindent
+set showmode
+set showcmd
+set hidden
+set wildmenu
+set wildignore=*.swp,*.bak,*.pyc
+set wildmode=list:longest
+set title           " change the terminal's title
+set visualbell      " don't beep
+set noerrorbells    " don't beep
+" set cursorline
+set ttyfast
+set ruler
+set backspace=indent,eol,start
+set laststatus=2
+set relativenumber
+set undofile
+set ruler
+set pastetoggle=<F2> " toggle paste mode on/off
 
 " change the leader key to comma
 let mapleader=","
 
-" Quickly edit/reload the vimrc file
-nmap <silent> <leader>ev :e $MYVIMRC<CR>
-nmap <silent> <leader>sv :so $MYVIMRC<CR>
+" searching/moving
+" unfuck vim regex 'handling'
+nnoremap / /\v 
+vnoremap / /\v 
+set ignorecase
+set smartcase
+set gdefault
+set incsearch
+set showmatch
+set hlsearch
+" clear search
+nnoremap <leader><space> :noh<cr> 
+nnoremap <tab> %
+vnoremap <tab> %
 
-filetype plugin indent on
-syntax on
-au FileType ruby set tabstop=2|set shiftwidth=2|set expandtab
+" long lines
+set wrap
+set textwidth=79
+set formatoptions=qrn1
+set colorcolumn=85
 
-set backspace=indent,eol,start 
-					" allow backspacing over everything in insert mode
-set autoindent      " always set autoindenting on
-set copyindent      " copy the prevous indenatation on autoindenting
-set tabstop=4       " four space tabs
-set shiftwidth=4    " number of spaces to use for autoidenting
-set expandtab		" tab = 4 spaces
-set shiftround      " use multiple of shiftwidth when indenting with '<' and '>'
-set showmatch       " set show matching parenthesis
-set ignorecase      " ignore case when searching
-set number          " always show line numbers
-set smartcase       " ignore case if search pattern is all lowercase
-                        " case sensitive otherwise
-set smarttab        " insert tabs on the start of a line according to
-                        " shiftwidth, not tabstop
-set hlsearch        " highlight search terms
-set incsearch       " show search matches as you type
+" invisible characters
+set list
+set listchars=tab:▸\ ,eol:¬
 
-set history=1000    " remember more commands and search history
-set undolevels=1000 " tons of undos
-set wildignore=*.swp,*.bak,*.pyc
-set title           " change the terminal's title
-set visualbell      " don't beep
-set noerrorbells    " don't beep
+" map arrows to nop
+nnoremap <up> <nop>
+nnoremap <down> <nop>
+nnoremap <left> <nop>
+nnoremap <right> <nop>
+inoremap <up> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop>
 
-set pastetoggle=<F2> " toggle paste mode on/off
+" move up/down through lines as expected
+nnoremap j gj
+nnoremap k gk
 
-set colorcolumn=80 " show mark at 80 chars
+" fucking shift
+nnoremap ; :
 
-" make compatible across most environments
-set encoding=utf-8
-set nocompatible
-set background=dark " makes it easier to read
+" save when focus lost
+au FocusLost * :wa
 
 " ESC = 'jk'
 inoremap jk <ESC>
@@ -53,26 +91,9 @@ inoremap jk <ESC>
 " . in visual mode repeats action
 vnoremap . :norm. <CR>
 
-" clear the search buffer with <leader>/ to get rid of annoying highlighting
-nmap <silent> <leader>/ :nohlsearch<CR>
+" strip all trailing whitespace in the current file with <leader>W
+nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 
-" get rid of the training wheels
-" map <up> <nop>
-" map <down> <nop>
-" map <left> <nop>
-" map <right> <nop>
-
+" forgot sudo vim
 cmap fuck w !sudo tee % >/dev/null
-
-
-
-
-
-
-
-
-
-
-
-
 
