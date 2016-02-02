@@ -5,13 +5,13 @@ set modelines=0
 set background=dark " makes it easier to read
 
 syntax on
-colo slate
-au FileType ruby set tabstop=2|set shiftwidth=2|set softtabstop=2
+colo desert
+au FileType python set tabstop=4|set shiftwidth=4|set softtabstop=4
 
 " fix tabs
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
 set expandtab
 
 " make vim behave not insanely
