@@ -79,6 +79,10 @@ inoremap <right> <nop>
 nnoremap j gj
 nnoremap k gk
 
+" buffer switching
+:nnoremap <C-n> :bnext<CR>
+:nnoremap <C-p> :bprevious<CR>
+
 " fucking shift
 nnoremap ; :
 
