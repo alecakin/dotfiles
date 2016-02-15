@@ -33,7 +33,6 @@ set ruler
 set backspace=indent,eol,start
 set laststatus=2
 set relativenumber
-set undofile
 set ruler
 set pastetoggle=<F2> " toggle paste mode on/off
 
