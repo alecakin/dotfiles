@@ -173,7 +173,7 @@ if [ $# -eq 0 ]; then
     exit $EX_USAGE
 fi
 
-while getopts ":hcCztvg3rfh" opt; do
+while getopts ":hcCztvg3rfu" opt; do
     case "$opt" in
         h)
             # Help message
@@ -216,7 +216,7 @@ while getopts ":hcCztvg3rfh" opt; do
             # Install packages for Fedora
             fedora_packages
             ;;
-        h)
+        u)
             # TODO: Update - Delete dirs I have no use for
             del_useless_dirs
             ;;
