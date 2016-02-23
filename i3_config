@@ -174,3 +174,4 @@ bar {
 }
 
 #exec_always xrandr --output VGA-0 --mode 1680x1050 --pos 0x0 --rotate normal --output VGA-1 --mode 1680x1050 --pos 1680x0 --rotate normal
+exec_always /usr/bin/feh --bg-scale /home/alexdean/Pictures/bg2.jpg
