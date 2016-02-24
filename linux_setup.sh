@@ -127,14 +127,14 @@ setup_root()
     # Apply ZSH, vim, git and tmux config to root
     # TODO: Give root a different ZSH prompt
     clone_dotfiles
-    sudo ln -s $HOME/.dotfiles/.zshrc $ROOT_HOME/.zshrc
+    sudo ln -s $HOME/.dotfiles/zshrc $ROOT_HOME/.zshrc
     sudo ln -s $HOME/.oh-my-zsh $ROOT_HOME/.oh-my-zsh
     sudo chsh -s `command -v zsh`
 
     # Create additional symlinks to give root similar config
-    sudo ln -s $HOME/.dotfiles/.vimrc $ROOT_HOME/.vimrc
-    sudo ln -s $HOME/.dotfiles/.gitconfig $ROOT_HOME/.gitconfig
-    sudo ln -s $HOME/.dotfiles/.tmux.conf $ROOT_HOME/.tmux.conf
+    sudo ln -s $HOME/.dotfiles/vimrc $ROOT_HOME/.vimrc
+    sudo ln -s $HOME/.dotfiles/gitconfig $ROOT_HOME/.gitconfig
+    sudo ln -s $HOME/.dotfiles/tmux.conf $ROOT_HOME/.tmux.conf
 }
 
 install_chrome()
