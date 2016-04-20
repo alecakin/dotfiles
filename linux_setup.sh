@@ -6,6 +6,13 @@ EX_USAGE=64
 
 ROOT_HOME="/root"
 
+install_package()
+{
+  which apt-get &>/dev/null && sudo apt-get install -y $1
+  which yum &>/dev/null && sudo yum install -y $1
+  which dnf &>/dev/null && sudo dnf install -y $1
+}
+
 usage()
 {
     # Print usage message
@@ -17,7 +24,6 @@ Setup a Linux system.
 OPTIONS:
     -h Show this message
     -c Clone configuration files
-    -C Install Google Chrome
     -z Install and setup ZSH shell
     -t Install and setup tmux
     -v Install and setup vim editor
@@ -33,11 +39,11 @@ clone_dotfiles()
 {
     # Grab repo of Linux configuration files
     if ! command -v git &> /dev/null; then
-        sudo dnf install -y git
+        install_package git
     fi
     if [ ! -d $HOME/.dotfiles ]
     then
-        git clone https://bitbucket.org/jellybean7555/dotfiles.git $HOME/.dotfiles
+        git clone https://github.com/alexanderdean111/dotfiles.git $HOME/.dotfiles
     fi
 }
 
@@ -46,7 +52,7 @@ install_zsh()
     # Install and configure ZSH. Can be used stand-alone.
     # Usecase: dev boxes that you want mostly fresh, but need zsh
     if ! command -v zsh &> /dev/null; then
-        sudo dnf install -y zsh
+        install_package zsh
     fi
 
     # Symlink my ZSH config to proper path
@@ -56,8 +62,6 @@ install_zsh()
     # Grab general ZSH config via oh-my-zsh project
     # See https://github.com/robbyrussell/oh-my-zsh
     git clone https://github.com/robbyrussell/oh-my-zsh.git $HOME/.oh-my-zsh 
-    git clone https://github.com/bhilburn/powerlevel9k.git \
-      ~/.oh-my-zsh/custom/themes/powerlevel9k
     # Set ZSH as my default shell
     chsh -s `command -v zsh`
 }
@@ -67,7 +71,7 @@ install_tmux()
     # Stand-alone function for installing/setting up only tmux
     # Usecase: dev boxes that you want mostly fresh, but need tmux
     if ! command -v tmux &> /dev/null; then
-        sudo dnf install -y tmux
+        install_package tmux
     fi
     clone_dotfiles
     # Symlink tmux config to proper path
@@ -79,8 +83,8 @@ install_vim()
     # Stand-alone function for installing/setting up only vim
     # Usecase: dev boxes that you want mostly fresh, but need vim
     if ! command -v vim &> /dev/null; then
-        sudo dnf update -y vim-minimal
-        sudo dnf install -y vim-X11 vim
+        install_package vim-minimal
+        install_package vim-X11 vim
     fi
     clone_dotfiles
     # Symlink vim config to proper path
@@ -99,11 +103,11 @@ install_i3()
 {
     # Install i3 WM if it isn't already installed
     if ! command -v i3 &> /dev/null; then
-        sudo dnf install -y i3
+        install_package i3
     fi
     # Install i3status, used by i3 WM, if it isn't already installed
     if ! command -v i3status &> /dev/null; then
-        sudo dnf install -y i3status
+        install_package i3status
     fi
 
     # Clone configs, including i3 and i3status configurations 
@@ -137,24 +141,10 @@ setup_root()
     sudo ln -s $HOME/.dotfiles/tmux.conf $ROOT_HOME/.tmux.conf
 }
 
-install_chrome()
-{
-    # Add Google Chrome repo to yum's sources
-    sudo bash -c "cat >/etc/yum.repos.d/google-chrome.repo <<EOL
-[google-chrome]
-name=google-chrome - 64-bit
-baseurl=http://dl.google.com/linux/chrome/rpm/stable/x86_64
-enabled=1
-gpgcheck=1
-gpgkey=https://dl-ssl.google.com/linux/linux_signing_key.pub
-EOL"
-    sudo dnf install -y google-chrome-stable
-}
-
 fedora_packages()
 {
     # Install the packages I find helpful for Fedora
-    sudo dnf install -y git tmux wget vim-X11 vim nmap i3 \
+    sudo dnf install -y  git tmux wget vim-X11 vim nmap i3 \
                      i3status zsh python-pip openssl openssl-devel \
                      zlib-devel python-pep8 gcc \
                      ruby-devel gcc-c++ dkms rubygem-bundler
@@ -183,10 +173,6 @@ while getopts ":hcCztvg3rfu" opt; do
         c)
             # Clone configuration files
             clone_dotfiles
-            ;;
-        C)
-            # Install Google Chrome
-            install_chrome
             ;;
         z)
             # Install and setup ZSH shell
