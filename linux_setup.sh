@@ -163,7 +163,7 @@ if [ $# -eq 0 ]; then
     exit $EX_USAGE
 fi
 
-while getopts ":hcCztvg3rfu" opt; do
+while getopts ":hcztvg3rfu" opt; do
     case "$opt" in
         h)
             # Help message
