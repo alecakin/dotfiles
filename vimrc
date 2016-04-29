@@ -41,8 +41,8 @@ let mapleader=","
 
 " searching/moving
 " unfuck vim regex 'handling'
-nnoremap / /\v 
-vnoremap / /\v 
+nnoremap / /\v
+vnoremap / /\v
 set ignorecase
 set smartcase
 set gdefault
