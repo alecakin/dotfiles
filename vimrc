@@ -1,18 +1,70 @@
+" vundle
+filetype off
+set nocompatible
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+Plugin 'nvie/vim-flake8'
+Plugin 'scrooloose/syntastic'
+
+
+" Add all your plugins here (note older versions of Vundle used Bundle 
+" instead of Plugin)
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
 
 filetype plugin indent on
-set nocompatible
+syntax on
+
+"python with virtualenv support
+py << EOF
+import os
+import sys
+if 'VIRTUAL_ENV' in os.environ:
+  project_base_dir = os.environ['VIRTUAL_ENV']
+  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+  execfile(activate_this, dict(__file__=activate_this))
+EOF
+
+" Use the below highlight group when displaying bad whitespace is desired.
+highlight BadWhitespace ctermbg=red guibg=re
+
+" Remap Flake8 Key
+autocmd FileType python map <buffer> <leader>a :call Flake8()<CR>
+
 set modelines=0
 set background=dark " makes it easier to read
 
-syntax on
+" Colors
 colo desert
-au FileType python set tabstop=4|set shiftwidth=4|set softtabstop=4
 
-" fix tabs
+au FileType *.py,*.pyw
+  \ set tabstop=4
+  \ set softtabstop=4
+  \ set shiftwidth=4
+  \ set textwidth=79
+  \ set expandtab
+  \ set autoindent
+  \ set fileformat=unix
+
+" mark extra whitespace
+au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /\s\+$/
+
+" Full syntax highlighting
+let python_highlight_all=1
+
+" not python file
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
-set expandtab
 
 " make vim behave not insanely
 set encoding=utf-8
@@ -49,6 +101,7 @@ set gdefault
 set incsearch
 set showmatch
 set hlsearch
+
 " clear search
 nnoremap <leader><space> :noh<cr> 
 nnoremap <tab> %
@@ -73,6 +126,16 @@ inoremap <up> <nop>
 inoremap <down> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
+
+" split navigations
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" Set splits
+set splitbelow
+set splitright
 
 " move up/down through lines as expected
 nnoremap j gj
