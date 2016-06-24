@@ -1,3 +1,7 @@
 [user]
 	email = jellybean7555@gmail.com
 	name = jellybean7555
+[http]
+	proxy = http://wall.ad.selinc.com:8080
+[https]
+	proxy = http://wall.ad.selinc.com:8080
