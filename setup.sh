@@ -99,10 +99,12 @@ install_zsh()
 
   # Set ZSH as my default shell
   if ! chsh -s `command -v zsh`; then
-    echo "chsh failed, symlinking .bash_profile instead"
-    backup_config_file $HOME/.bash_profile
-    echo "Creating symlink: $HOME/.bash_profile"
-    ln -s $HOME/.dotfiles/bash_profile $HOME/.bash_profile
+    echo "chsh failed, zsh not set as default shell"
+    # modifying bash_profile like this breaks login in some weird way
+    #echo "chsh failed, symlinking .bash_profile instead"
+    #backup_config_file $HOME/.bash_profile
+    #echo "Creating symlink: $HOME/.bash_profile"
+    #ln -s $HOME/.dotfiles/bash_profile $HOME/.bash_profile
   fi
 }
 
