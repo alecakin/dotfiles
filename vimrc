@@ -35,7 +35,7 @@ if 'VIRTUAL_ENV' in os.environ:
 EOF
 
 " Use the below highlight group when displaying bad whitespace is desired.
-highlight BadWhitespace ctermbg=red guibg=re
+highlight BadWhitespace ctermbg=red guibg=red
 
 " Remap Flake8 Key
 autocmd FileType python map <buffer> <leader>a :call Flake8()<CR>
