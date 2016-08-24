@@ -15,7 +15,7 @@ Plugin 'nvie/vim-flake8'
 Plugin 'scrooloose/syntastic'
 
 
-" Add all your plugins here (note older versions of Vundle used Bundle 
+" Add all your plugins here (note older versions of Vundle used Bundle
 " instead of Plugin)
 
 " All of your Plugins must be added before the following line
@@ -108,7 +108,7 @@ set showmatch
 set hlsearch
 
 " clear search
-nnoremap <leader><space> :noh<cr> 
+nnoremap <leader><space> :noh<cr>
 nnoremap <tab> %
 vnoremap <tab> %
 
