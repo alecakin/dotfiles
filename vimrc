@@ -25,7 +25,7 @@ filetype plugin indent on
 syntax on
 
 "python with virtualenv support
-py << EOF
+py3 << EOF
 import os
 import sys
 if 'VIRTUAL_ENV' in os.environ:
