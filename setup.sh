@@ -168,6 +168,11 @@ install_i3()
     install_package i3status
   fi
 
+  # Install feh, if it isn't already installed
+  if ! command -v feh &> /dev/null; then
+    install_package feh 
+  fi
+
   # Clone configs, including i3 and i3status configurations
   clone_dotfiles
 
