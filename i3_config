@@ -11,6 +11,10 @@
 
 set $mod Mod1
 
+# monitor variables
+set $monL DP-2
+set $monR DP-1
+
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 font pango:monospace 8
@@ -96,47 +100,55 @@ set $TerminalWorkspace "1: Terminals"
 set $FirefoxWorkspace "2: Firefox"
 set $NotesWorkspace "3: Notes"
 set $IMWorkspace "4: IM"
+set $RDPWorkspace "5: RDP"
+set $BomgarWorkspace "9: Bomgar"
+set $KeePassWorkspace "10: KeePass"
 
 # switch to workspace
 bindsym $mod+1 workspace $TerminalWorkspace
 bindsym $mod+2 workspace $FirefoxWorkspace
 bindsym $mod+3 workspace $NotesWorkspace
 bindsym $mod+4 workspace $IMWorkspace
-bindsym $mod+5 workspace 5
+bindsym $mod+5 workspace $RDPWorkspace
 bindsym $mod+6 workspace 6
 bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8
-bindsym $mod+9 workspace 9
-bindsym $mod+0 workspace 10
+bindsym $mod+9 workspace $BomgarWorkspace
+bindsym $mod+0 workspace $KeePassWorkspace
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $TerminalWorkspace
 bindsym $mod+Shift+2 move container to workspace $FirefoxWorkspace
 bindsym $mod+Shift+3 move container to workspace $NotesWorkspace
 bindsym $mod+Shift+4 move container to workspace $IMWorkspace
-bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+5 move container to workspace $RDPWorkspace
 bindsym $mod+Shift+6 move container to workspace 6
 bindsym $mod+Shift+7 move container to workspace 7
 bindsym $mod+Shift+8 move container to workspace 8
-bindsym $mod+Shift+9 move container to workspace 9
-bindsym $mod+Shift+0 move container to workspace 10
+bindsym $mod+Shift+9 move container to workspace $BomgarWorkspace 
+bindsym $mod+Shift+0 move container to workspace $KeePassWorkspace
 
 # volume keys
 bindsym F5 exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
 bindsym F4 exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
 bindsym F3 exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
-# monitor variables
-set $leftScreen "VGA-0"
-set $rightScreen "VGA-1"
 
 # workspace monitor assignments
-#workspace $TerminalWorkspace output $leftScreen
-#workspace $FirefoxWorkspace output $rightScreen
-#workspace $NotesWorkspace output $rightScreen
+workspace $TerminalWorkspace output $monL
+workspace $FirefoxWorkspace output $monR
+workspace $NotesWorkspace output $monR
+workspace $BomgarWorkspace output $monR
+workspace $KeePassWorkspace output $monR
+workspace 6 output $monL
+workspace 7 output $monL
+workspace 8 output $monL
 
 # application workspace assignments
 assign [class="Firefox"] $FirefoxWorkspace
 assign [class="IBM Notes"] $NotesWorkspace
+assign [class="KeePass2"] $KeePassWorkspace
+assign [class="Bomgar-rep"] $BomgarWorkspace
+assign [class="rdesktop"] $RDPWorkspace
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -153,10 +165,10 @@ mode "resize" {
         # Pressing right will grow the window’s width.
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 10 px or 10 ppt
+        bindsym h resize shrink width 10px or 10ppt
+        bindsym j resize shrink height 10 px or 10 ppt
         bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt
-        bindsym semicolon resize grow width 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
 
         # same bindings, but for the arrow keys
         bindsym Left resize shrink width 10 px or 10 ppt
@@ -169,9 +181,9 @@ mode "resize" {
         bindsym Escape mode "default"
 }
 
+bindsym $mod+p exec mono /usr/lib/keepass2/KeePass.exe --auto-type
 bindsym $mod+r mode "resize"
-bindsym Control+$mod+l exec i3lock -c 000000 -n
-
+bindsym Control+$mod+l exec "i3lock -i $HOME/Pictures/wallpaper.png -t -n"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
@@ -181,7 +193,7 @@ bar {
 }
 
 exec xautolock -detectsleep \
-  -time 5 -locker "i3lock -c 000000 -n" \
+    -time 5 -locker "i3lock -i $HOME/Pictures/wallpaper.png -t -n"
 
-#exec_always xrandr --output VGA-0 --mode 1680x1050 --pos 0x0 --rotate normal --output VGA-1 --mode 1680x1050 --pos 1680x0 --rotate normal
-exec_always /usr/bin/feh --bg-scale $HOME/Pictures/wallpaper.png
+exec_always xrandr --output $monL --mode 1680x1050 --pos 0x0 --rotate normal --output $monR --mode 1680x1050 --pos 1680x0 --rotate normal
+exec_always --no-startup-id /usr/bin/feh --bg-scale $HOME/Pictures/wallpaper.png
