@@ -96,6 +96,10 @@ bindsym $mod+space focus mode_toggle
 # focus the parent container
 bindsym $mod+a focus parent
 
+# move workspaces between monitors
+bindsym $mod+Shift+o move workspace to output $monL
+bindsym $mod+Shift+p move workspace to output $monR
+
 # focus the child container
 #bindsym $mod+d focus child
 
@@ -103,6 +107,7 @@ set $TerminalWorkspace "1: Terminals"
 set $FirefoxWorkspace "2: Firefox"
 set $NotesWorkspace "3: Notes"
 set $IMWorkspace "4: IM"
+set $LibreOfficeWorkspace "7: Office"
 set $RDPWorkspace "8: RDP"
 set $BomgarWorkspace "9: Bomgar"
 set $KeePassWorkspace "10: KeePass"
@@ -114,7 +119,7 @@ bindsym $mod+3 workspace $NotesWorkspace
 bindsym $mod+4 workspace $IMWorkspace
 bindsym $mod+5 workspace 5
 bindsym $mod+6 workspace 6
-bindsym $mod+7 workspace 7
+bindsym $mod+7 workspace $LibreOfficeWorkspace
 bindsym $mod+8 workspace $RDPWorkspace
 bindsym $mod+9 workspace $BomgarWorkspace
 bindsym $mod+0 workspace $KeePassWorkspace
@@ -126,7 +131,7 @@ bindsym $mod+Shift+3 move container to workspace $NotesWorkspace
 bindsym $mod+Shift+4 move container to workspace $IMWorkspace
 bindsym $mod+Shift+5 move container to workspace 5
 bindsym $mod+Shift+6 move container to workspace 6
-bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+7 move container to workspace $LibreOfficeWorkspace
 bindsym $mod+Shift+8 move container to workspace $RDPWorkspace
 bindsym $mod+Shift+9 move container to workspace $BomgarWorkspace 
 bindsym $mod+Shift+0 move container to workspace $KeePassWorkspace
@@ -142,10 +147,10 @@ workspace $FirefoxWorkspace output $monR
 workspace $NotesWorkspace output $monR
 workspace $BomgarWorkspace output $monR
 workspace $KeePassWorkspace output $monR
-workspace $RDWorkspace output $monL
+workspace $RDPWorkspace output $monL
+workspace $LibreOfficeWorkspace output $monL
 workspace 5 output $monL
 workspace 6 output $monL
-workspace 7 output $monL
 
 # application workspace assignments
 assign [class="Firefox"] $FirefoxWorkspace
@@ -153,6 +158,7 @@ assign [class="IBM Notes"] $NotesWorkspace
 assign [class="KeePass2"] $KeePassWorkspace
 assign [class="Bomgar-rep"] $BomgarWorkspace
 assign [class="rdesktop"] $RDPWorkspace
+assign [class="libreoffice"] $LibreOfficeWorkspace
 
 # make rdesktop not floating
 for_window [class="rdesktop"] floating disable
@@ -204,4 +210,4 @@ exec xautolock -detectsleep \
     -time 5 -locker i3lock -i $wallpaper -t -n -e
 
 exec_always xrandr --output $monL --mode 1680x1050 --pos 0x0 --rotate normal --output $monR --mode 1680x1050 --pos 1680x0 --rotate normal
-exec_always --no-startup-id /usr/bin/feh --bg-scale $HOME/Pictures/wallpaper.png
+exec_always --no-startup-id /usr/bin/feh --bg-scale $wallpaper
