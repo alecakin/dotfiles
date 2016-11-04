@@ -84,5 +84,7 @@ source $ZSH/oh-my-zsh.sh
 alias rm="rm -i"
 alias mv="mv -i"
 alias cp="cp -i"
+
+alias rdesktop="rdesktop -d SEL -u alexdean -p - -K -g 1680x1000 "
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
