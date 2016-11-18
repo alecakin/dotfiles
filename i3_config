@@ -159,6 +159,7 @@ assign [class="KeePass2"] $KeePassWorkspace
 assign [class="Bomgar-rep"] $BomgarWorkspace
 assign [class="rdesktop"] $RDPWorkspace
 assign [class="libreoffice"] $LibreOfficeWorkspace
+assign [class="Google-chrome"] $BomgarWorkspace
 
 # make rdesktop not floating
 for_window [class="rdesktop"] floating disable
