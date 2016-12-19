@@ -123,6 +123,8 @@ install_zsh()
   fi
 
   # Set ZSH as my default shell
+  backup_config_file $HOME/.bash_profile
+  log "Creating symlink: $HOME/.bash_profile"
   ln -s $HOME/.dotfiles/bash_profile $HOME/.bash_profile
 }
 
