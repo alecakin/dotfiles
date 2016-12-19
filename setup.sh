@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 EX_OK=0
 EX_ERR=1
@@ -8,17 +8,17 @@ ROOT_HOME="/root"
 
 log()
 {
-  echo "\033[0;32m[+] $1\033[0m"
+  echo -e "\033[0;32m[+] $1\033[0m"
 }
 
 error_log()
 {
-  echo "\033[0;31m[-] $1\033[0m"
+  echo -e "\033[0;31m[-] $1\033[0m"
 }
 
 warning_log()
 {
-  echo "\033[1;33m[-] $1\033[0m"
+  echo -e "\033[1;33m[-] $1\033[0m"
 
 }
 
@@ -69,7 +69,7 @@ ensure_sudo()
 
 backup_config_file()
 {
-  echo "backing up $1"
+  log "backing up $1"
   if [ -L $1 ]; then
     warning_log "Symlink $1 already exists, removing it"
       rm $1
@@ -111,9 +111,10 @@ install_zsh()
 
   # Grab general ZSH config via oh-my-zsh project
   # See https://github.com/robbyrussell/oh-my-zsh
-  if ! git clone https://github.com/robbyrussell/oh-my-zsh.git \
-          $HOME/.oh-my-zsh &>/dev/null; then
-    warning_log "oh-my-zsh config already exists, leaving as is"
+  ret=$(git clone https://github.com/robbyrussell/oh-my-zsh.git \
+    $HOME/.oh-my-zsh >/dev/null 2>&1)
+  if [[ $ret =~ "already exists" ]]; then
+    warning_log "oh-my-zsh config already exists"
   fi
 
   # Set ZSH as my default shell
@@ -139,7 +140,7 @@ install_vim()
   log "installing Vundle"
   ret=$(git clone https://github.com/VundleVim/Vundle.vim.git \
     $HOME/.dotfiles/vim/bundle/Vundle.vim 2>&1)
-  if [[ "$ret" =~ "already exists" ]]; then
+  if [[ $ret =~ "already exists" ]]; then
     warning_log "Vundle already installed, skipping"
   fi
 
