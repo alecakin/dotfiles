@@ -80,7 +80,7 @@ backup_config_file()
     mv $1 "$1.bak"
   fi
 
-  if [ -d $1]; then
+  if [ -d $1 ]; then
     warning_log "directory $1 already exists, moving it to $1.bak"
     mv $1 "$1.bak"
   fi
