@@ -6,9 +6,25 @@ EX_USAGE=64
 
 ROOT_HOME="/root"
 
+log()
+{
+  echo "\033[0;32m[+] $1\033[0m"
+}
+
+error_log()
+{
+  echo "\033[0;31m[-] $1\033[0m"
+}
+
+warning_log()
+{
+  echo "\033[1;33m[-] $1\033[0m"
+
+}
+
 install_package()
 {
-  echo "installing $1"
+  log "installing $1"
   if which apt-get >/dev/null 2>&1; then
     sudo http_proxy=$http_proxy https_proxy=$https_proxy apt-get install -y $1
   elif which dnf >/dev/null 2>&1; then
@@ -16,7 +32,7 @@ install_package()
   elif which yum >/dev/null 2>&1; then
     sudo http_proxy=$http_proxy https_proxy=$https_proxy yum install -y $1
   else
-    echo "package manager not found, aborting"
+    error_log "package manager not found"
     exit 1
   fi
 }
@@ -46,7 +62,7 @@ ensure_sudo()
 {
   user=$(id | cut -d'=' -f2 | cut -d\( -f1)
   if [ $user -ne 0 ]; then
-    echo "This option needs root authentication to install."
+    error_log "This option needs root authentication to install."
     exit 1
   fi
 }
@@ -55,12 +71,12 @@ backup_config_file()
 {
   echo "backing up $1"
   if [ -L $1 ]; then
-    echo "Symlink $1 already exists, removing it"
+    warning_log "Symlink $1 already exists, removing it"
       rm $1
     fi
 
   if [ -f $1 ]; then
-    echo "$1 already exists, moving it to $1.bak"
+    warning_log "$1 already exists, moving it to $1.bak"
       mv $1 "$1.bak"
     fi
 }
@@ -75,6 +91,7 @@ clone_dotfiles()
   # Clone dotfiles
   if [ ! -d $HOME/.dotfiles ]
   then
+    log "cloning dotfiles to $HOME/.dotfiles"
     git clone https://github.com/alexanderdean111/dotfiles.git $HOME/.dotfiles
   fi
 }
@@ -89,27 +106,18 @@ install_zsh()
   # link config
   clone_dotfiles
   backup_config_file $HOME/.zshrc
-  echo "Creating symlink: $HOME/.zshrc"
+  log "Creating symlink: $HOME/.zshrc"
   ln -s $HOME/.dotfiles/zshrc $HOME/.zshrc
 
   # Grab general ZSH config via oh-my-zsh project
   # See https://github.com/robbyrussell/oh-my-zsh
   if ! git clone https://github.com/robbyrussell/oh-my-zsh.git \
           $HOME/.oh-my-zsh &>/dev/null; then
-    echo "oh-my-zsh config already exists, leaving as is"
+    warning_log "oh-my-zsh config already exists, leaving as is"
   fi
 
   # Set ZSH as my default shell
   ln -s $HOME/.dotfiles/bash_profile $HOME/.bash_profile
-
-  #if ! chsh -s `command -v zsh`; then
-  #  echo "chsh failed, zsh not set as default shell"
-    # modifying bash_profile like this breaks login in some weird way
-    #echo "chsh failed, symlinking .bash_profile instead"
-    #backup_config_file $HOME/.bash_profile
-    #echo "Creating symlink: $HOME/.bash_profile"
-    #ln -s $HOME/.dotfiles/bash_profile $HOME/.bash_profile
-  #fi
 }
 
 install_tmux()
@@ -121,22 +129,23 @@ install_tmux()
   # link config
   clone_dotfiles
   backup_config_file $HOME/.tmux.conf
-  echo "Creating symlink: $HOME/.tmux.conf"
+  log "Creating symlink: $HOME/.tmux.conf"
   ln -s $HOME/.dotfiles/tmux.conf $HOME/.tmux.conf
 }
 
 install_vim()
 {
   # install Vundle
-  echo "installing Vundle"
+  log "installing Vundle"
   ret=$(git clone https://github.com/VundleVim/Vundle.vim.git \
     $HOME/.dotfiles/vim/bundle/Vundle.vim 2>&1)
   if [[ "$ret" =~ "already exists" ]]; then
-    echo "Vundle already installed, skipping"
+    warning_log "Vundle already installed, skipping"
   fi
-  # link config
+
+  # link vim modules config
   backup_config_file $HOME/.vim
-  echo "Creating symlink: $HOME/.vim"
+  log "Creating symlink: $HOME/.vim"
   ln -s $HOME/.dotfiles/vim $HOME/.vim
   
   if ! command -v vim >/dev/null 2>&1; then
@@ -145,10 +154,11 @@ install_vim()
     install_package vim
     install_package vim-enhanced
   fi
+
   # link config
   clone_dotfiles
   backup_config_file $HOME/.vimrc
-  echo "Creating symlink: $HOME/.vimrc"
+  log "Creating symlink: $HOME/.vimrc"
   ln -s $HOME/.dotfiles/vimrc $HOME/.vimrc
 }
 
@@ -156,7 +166,7 @@ install_git()
 {
   clone_dotfiles
   backup_config_file $HOME/.gitconfig
-  echo "Creating symlink: $HOME/.vimrc"
+  log "Creating symlink: $HOME/.gitconfig"
   ln -s $HOME/.dotfiles/gitconfig $HOME/.gitconfig
 }
 
@@ -210,7 +220,7 @@ if [ $# -eq 0 ]; then
   exit $EX_USAGE
 fi
 
-while getopts ":hcztvg3rd" opt; do
+while getopts ":hcztvg3rd9" opt; do
   case "$opt" in
     h)
       # Help message
