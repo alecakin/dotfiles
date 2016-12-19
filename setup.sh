@@ -9,11 +9,11 @@ ROOT_HOME="/root"
 install_package()
 {
   echo "installing $1"
-  if which apt-get &>/dev/null; then
+  if which apt-get >/dev/null 2>&1; then
     sudo http_proxy=$http_proxy https_proxy=$https_proxy apt-get install -y $1
-  elif which dnf &>/dev/null; then
+  elif which dnf >/dev/null 2>&1; then
     sudo http_proxy=$http_proxy https_proxy=$https_proxy dnf install -y $1
-  elif which yum &>/dev/null; then
+  elif which yum >/dev/null 2>&1; then
     sudo http_proxy=$http_proxy https_proxy=$https_proxy yum install -y $1
   else
     echo "package manager not found, aborting"
@@ -67,10 +67,12 @@ backup_config_file()
 
 clone_dotfiles()
 {
-  # Grab repo of Linux configuration files
-  if ! command -v git &> /dev/null; then
+  # Install git
+  if ! command -v git >/dev/null 2>&1; then
     install_package git
   fi
+  
+  # Clone dotfiles
   if [ ! -d $HOME/.dotfiles ]
   then
     git clone https://github.com/alexanderdean111/dotfiles.git $HOME/.dotfiles
@@ -80,7 +82,7 @@ clone_dotfiles()
 install_zsh()
 {
   # Install and configure ZSH. Can be used stand-alone.
-  if ! command -v zsh &> /dev/null; then
+  if ! command -v zsh >/dev/null 2>&1; then
     install_package zsh
   fi
 
@@ -112,7 +114,7 @@ install_zsh()
 
 install_tmux()
 {
-  if ! command -v tmux &> /dev/null; then
+  if ! command -v tmux >/dev/null 2>&1; then
     install_package tmux
   fi
 
@@ -137,7 +139,7 @@ install_vim()
   echo "Creating symlink: $HOME/.vim"
   ln -s $HOME/.dotfiles/vim $HOME/.vim
   
-  if ! command -v vim &> /dev/null; then
+  if ! command -v vim >/dev/null 2>&1; then
     install_package vim-minimal
     install_package vim-X11
     install_package vim
@@ -161,17 +163,17 @@ install_git()
 install_i3()
 {
   # Install i3 WM if it isn't already installed
-  if ! command -v i3 &> /dev/null; then
+  if ! command -v i3 >/dev/null 2>&1; then
     install_package i3
   fi
 
   # Install i3status, used by i3 WM, if it isn't already installed
-  if ! command -v i3status &> /dev/null; then
+  if ! command -v i3status >/dev/null 2>&1; then
     install_package i3status
   fi
 
   # Install feh, if it isn't already installed
-  if ! command -v feh &> /dev/null; then
+  if ! command -v feh >/dev/null 2>&1; then
     install_package feh 
   fi
 
