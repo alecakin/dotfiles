@@ -79,6 +79,10 @@ backup_config_file()
     warning_log "$1 already exists, moving it to $1.bak"
       mv $1 "$1.bak"
     fi
+
+  if [ -d $1]; then
+    warning_log "$1 already exists, moving it to $1.bak"
+  fi
 }
 
 clone_dotfiles()
@@ -200,18 +204,19 @@ install_i3()
 
   # link config
   backup_config_file $HOME/.i3/config
-  echo "Creating symlink: $HOME/.i3/config"
+  log "Creating symlink: $HOME/.i3/config"
   ln -s $HOME/.dotfiles/i3_config $HOME/.i3/config
 
   # link i3status config
   backup_config_file $HOME/.i3status.conf
-  echo "Creating symlink: $HOME/.i3status.conf"
+  log "Creating symlink: $HOME/.i3status.conf"
   ln -s $HOME/.dotfiles/i3status.conf $HOME/.i3status.conf
 }
 
 del_useless_dirs()
 {
   # Removes default dirs that I have no use for
+  log "deleting useless directories"
   rm -rf ~/Videos ~/Templates ~/Public ~/Music ~/Desktop
 }
 
