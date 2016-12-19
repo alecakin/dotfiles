@@ -10,11 +10,11 @@ install_package()
 {
   echo "installing $1"
   if which apt-get &>/dev/null; then
-    sudo apt-get install -y $1
+    sudo http_proxy=$http_proxy https_proxy=$https_proxy apt-get install -y $1
   elif which dnf &>/dev/null; then
-    sudo dnf install -y $1
+    sudo http_proxy=$http_proxy https_proxy=$https_proxy dnf install -y $1
   elif which yum &>/dev/null; then
-    sudo yum install -y $1
+    sudo http_proxy=$http_proxy https_proxy=$https_proxy yum install -y $1
   else
     echo "package manager not found, aborting"
     exit 1
@@ -98,14 +98,16 @@ install_zsh()
   fi
 
   # Set ZSH as my default shell
-  if ! chsh -s `command -v zsh`; then
-    echo "chsh failed, zsh not set as default shell"
+  ln -s $HOME/.dotfiles/bash_profile $HOME/.bash_profile
+
+  #if ! chsh -s `command -v zsh`; then
+  #  echo "chsh failed, zsh not set as default shell"
     # modifying bash_profile like this breaks login in some weird way
     #echo "chsh failed, symlinking .bash_profile instead"
     #backup_config_file $HOME/.bash_profile
     #echo "Creating symlink: $HOME/.bash_profile"
     #ln -s $HOME/.dotfiles/bash_profile $HOME/.bash_profile
-  fi
+  #fi
 }
 
 install_tmux()
