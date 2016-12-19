@@ -72,16 +72,17 @@ backup_config_file()
   log "backing up $1"
   if [ -L $1 ]; then
     warning_log "Symlink $1 already exists, removing it"
-      rm $1
-    fi
+    rm $1
+  fi
 
   if [ -f $1 ]; then
     warning_log "$1 already exists, moving it to $1.bak"
-      mv $1 "$1.bak"
-    fi
+    mv $1 "$1.bak"
+  fi
 
   if [ -d $1]; then
-    warning_log "$1 already exists, moving it to $1.bak"
+    warning_log "directory $1 already exists, moving it to $1.bak"
+    mv $1 "$1.bak"
   fi
 }
 
