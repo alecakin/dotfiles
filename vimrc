@@ -21,6 +21,7 @@ Plugin 'scrooloose/syntastic'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 
+filetype off
 filetype plugin indent on
 syntax on
 
@@ -46,17 +47,8 @@ set background=dark " makes it easier to read
 " Colors
 colo desert
 
-au FileType *.py,*.pyw
-  \ set tabstop=4
-  \ set softtabstop=4
-  \ set shiftwidth=4
-  \ set textwidth=79
-  \ set expandtab
-  \ set autoindent
-  \ set fileformat=unix
-
 " mark extra whitespace
-au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /\s\+$/
+autocmd BufRead,BufNewFile *.py,*.pyw match BadWhitespace /\s\+$/
 
 " Full syntax highlighting
 let python_highlight_all=1
@@ -70,6 +62,8 @@ set expandtab
 set autoindent
 set fileformat=unix
 
+" python file
+autocmd Filetype python set tabstop=4|set softtabstop=4|set shiftwidth=4
 
 " make vim behave not insanely
 set encoding=utf-8
