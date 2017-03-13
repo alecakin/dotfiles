@@ -33,8 +33,9 @@ font pango:monospace 8
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-# Wallpaper path
-set $wallpaper "$HOME/Pictures/wallpaper"
+# Wallpaper paths
+set $lockscreen "$HOME/Pictures/lockscreen"
+set $desktop "$HOME/Pictures/desktop"
 
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
@@ -200,7 +201,7 @@ mode "resize" {
 
 bindsym $mod+p exec mono /usr/lib/keepass2/KeePass.exe --auto-type
 bindsym $mod+r mode "resize"
-bindsym Control+$mod+l exec i3lock -i $wallpaper -t -n -e
+bindsym Control+$mod+l exec i3lock -i $lockscreen -t -n -e
 #bindsym Control+$mod+l exec i3lock -i /home/alexdean/Documents/lol_background/background.png -e
 
 # Start i3bar to display a workspace bar (plus the system information i3status
@@ -211,7 +212,7 @@ bar {
 }
 
 exec xautolock -detectsleep \
-    -time 5 -locker i3lock -i $wallpaper -t -n -e
+    -time 5 -locker i3lock -i $lockscreen -t -n -e
 
 exec_always xrandr --output $monL --mode 1680x1050 --pos 0x0 --rotate normal --output $monR --mode 1680x1050 --pos 1680x0 --rotate normal
-exec_always --no-startup-id /usr/bin/feh --bg-scale $wallpaper
+exec_always --no-startup-id /usr/bin/feh --bg-scale $desktop
