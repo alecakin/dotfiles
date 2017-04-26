@@ -143,12 +143,27 @@ install_tmux()
 
 install_vim()
 {
-  # install Vundle
-  log "installing Vundle"
-  ret=$(git clone https://github.com/VundleVim/Vundle.vim.git \
-    $HOME/.dotfiles/vim/bundle/Vundle.vim 2>&1)
+  # install Pathogen
+  log "installing Pathogen"
+
+  ret=$(git clone https://github.com/tpope/vim-pathogen.git \
+    $HOME/.dotfiles/vim/vim-pathogen 2>&1)
   if [[ $ret =~ "already exists" ]]; then
-    warning_log "Vundle already installed, skipping"
+    warning_log "Pathogen already installed, skipping"
+  fi
+
+  log "installing plugins"
+
+  ret=$(git clone https://github.com/vim-syntastic/syntastic.git \
+    $HOME/.dotfiles/vim/bundle/syntastic 2>&1)
+  if [[ $ret =~ "already exists" ]]; then
+    warning_log "Syntastic already installed, skipping"
+  fi
+
+  ret=$(git clone https://github.com/nvie/vim-flake8.git \
+    $HOME/.dotfiles/vim/bundle/vim-flake8 2>&1)
+  if [[ $ret =~ "already exists" ]]; then
+    warning_log "vim-flake8 already installed, skipping"
   fi
 
   # link vim modules config
