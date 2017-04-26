@@ -6,6 +6,11 @@ syntax on
 
 " change the leader key to comma
 let mapleader=","
+let maplocalleader=","
+
+" vim-orgmode
+let g:org_agenda_files = ['~/*.org']
+let g:org_todo_keywords = ['TODO', 'IN_PROGRESS', '|', 'DONE']
 
 " Use the below highlight group when displaying bad whitespace is desired.
 highlight BadWhitespace ctermbg=red guibg=red
